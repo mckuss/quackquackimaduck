@@ -40,10 +40,14 @@
 				<div class="inner">
 					<h1>WHAT THE KUSS</h1>
 					<p>We're going MIA for a few months<p>
-					see where we are in <a href="https://maps.findmespot.com/Track?ishr=00e9ecef-8167-457c-8515-abb6000f8300#panel-history" target="_blank">real time</a><p>
-					see where we might be going, covid-willing: <a href="https://goo.gl/maps/gBAJcrebvym7xQcV8" target="_blank">Plan A</a> | <a href="https://goo.gl/maps/EsjqnojoqaNUL8un8" target="_blank">Plan B</a> | <a href="https://goo.gl/maps/AGkVLvvBRPGwEUZd7" target="_blank">Plan Z</a> (or something)<p>
-					see where we've been: <a href="https://www.strava.com/athletes/miniihu" target="_blank">Becca</a> | <a href="https://www.strava.com/athletes/kussbus" target="_blank">Mikey</a><p>
-					and check out our <a href="https://templated.co/" target="_blank">blog</a> and our <a href="https://www.youtube.com/channel/UCW0USnfyhfOfDv0Bzm9ckGA" target="_blank">Youtube channel</a></p>
+					<p>see where we are in <a href="https://maps.findmespot.com/Track?ishr=00e9ecef-8167-457c-8515-abb6000f8300#panel-history" target="_blank">real time</a><p>
+					<p>see where we might be going, covid-willing: <a href="https://goo.gl/maps/gBAJcrebvym7xQcV8" target="_blank">Plan A</a> | <a href="https://goo.gl/maps/EsjqnojoqaNUL8un8" target="_blank">Plan B</a> | <a href="https://goo.gl/maps/AGkVLvvBRPGwEUZd7" target="_blank">Plan Z</a> (or something)<p>
+					<p>see where we've been: <a href="https://www.strava.com/athletes/miniihu" target="_blank">Becca</a> | <a href="https://www.strava.com/athletes/kussbus" target="_blank">Mikey</a><p>
+					<p>and check out our <a href="https://templated.co/" target="_blank">blog</a> and our <a href="https://www.youtube.com/channel/UCW0USnfyhfOfDv0Bzm9ckGA" target="_blank">Youtube channel</a></p>
+					<div id="stats-container">
+						<h3>Real-time stats</h3>
+						<div id="stats"></div>
+					</div>
 					<a href="#one" class="button special scrolly">Maps and whatnot</a>
 				</div>
 			</section>
@@ -215,6 +219,45 @@
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				const statsElement = document.getElementById('stats');
+				fetch('https://spreadsheets.google.com/feeds/cells/1p5_O61803wcW42CiQ4Ym-NurGPiSu8upVZRWXe5s_5s/1/public/full?alt=json')
+					.then(response => response.json())
+					.then(json => {
+						statsElement.innerHTML = renderList(json.feed.entry);
+					});
+
+				function renderList(entries) {
+					const titles = getTitles(entries);
+
+					let html = '<ul class="stats-list">';
+					for (const title of titles) {
+						html += renderListItem(title, entries);
+					}
+					html += '</ul>';
+					return html;
+				}
+
+				function renderListItem(title, entries) {
+					return `<li>${getTitleText(title)} ${getValueText(getValue(title, entries))}</li>`;
+				}
+
+				function getTitleText(title) {
+					return `<span class="stats-list-title">${title.content.$t.trim().replace(/:/g, '')}</span>`;
+				}
+
+				function getValueText(value) {
+					return `<span class="stats-list-value">${value.content.$t.trim()}</span>`;
+				}
+
+				function getTitles(entries) {
+					return entries.filter(entry => entry.gs$cell.col === "1");
+				}
+
+				function getValue(title, entries) {
+					return entries.find(entry => entry.gs$cell.row === title.gs$cell.row && entry.gs$cell.col === "2");
+				}
+			</script>
 	</body>
 
 </html>
