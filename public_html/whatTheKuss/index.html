@@ -37,6 +37,10 @@
 			<section id="banner" data-video="images/tandem2">
 				<div class="inner">
 					<h1>WHAT THE KUSS</h1>
+
+					Countdown to pedal-off:
+					<p id="countdown"></p>
+
 					<p>We're going MIA for a few months<p>
 					<p><a href="https://maps.findmespot.com/s/0SYX" target="_blank">see where we are in real time</a><p>
 					<p>see where we might be going, covid-willing: <a href="https://goo.gl/maps/gBAJcrebvym7xQcV8" target="_blank">Plan A</a> | <a href="https://goo.gl/maps/EsjqnojoqaNUL8un8" target="_blank">Plan B</a> | <a href="https://goo.gl/maps/AGkVLvvBRPGwEUZd7" target="_blank">Plan Z</a> (or something)<p>
@@ -97,7 +101,7 @@
 							<b>Make</b>: Co-Motion<br>
 							<b>Model</b>: 2015(ish) Periscope Torpedo<br>
 							<b>Favorite Captain</b>: Mikey<br>
-							<b>Favorite Stoker</b>: Becca<br><
+							<b>Favorite Stoker</b>: Becca<br>
 							<b>Favorite Tandem Doctor</b>: Kevin<br><br>
 							<b>Puff the Magic Tandem:</b><br>
 							<b>Make</b>: Cannondale<br>
@@ -108,6 +112,10 @@
 							<ul class="actions">
 								<li><a href="https://www.youtube.com/watch?v=_1G9wO9-54c" class="button alt">Learn More</a></li>
 							</ul>
+							<p>
+								Special thanks to our super-unauthorized and not-really-sponsored tandem repair kit sponsorship from <a href="http://www.tandemcycleworks.com" target="_blank">Tandem Cycle Works</a><br>
+								<a href="http://www.tandemcycleworks.com"><img src="images/TCWlogo.png" width=150></a>
+							</p>
 						</div>
 						<div>
 							<header>
@@ -196,8 +204,14 @@
 					<header class="align-center">
 						<h2>Any ideas what we should put here?</h2>
 						<p>Neither do we. So we'll just leave this blank for now.</p>
+						<p>UPDATE: 3 ideas in the running so far:</p><br>
 					</header>
-
+					<div class="align-left">
+							1. Photos of interesting animal sightings - Foz<br>
+							2. Mom: how about mini journal, photos of the day, or animal sighting? <a href="http://whatthekuss.blogspot.com" target="_blank">here ya go!</a> | Maybe a quick video if it's really cool: <a href="https://www.youtube.com/channel/UCW0USnfyhfOfDv0Bzm9ckGA" target="_blank"> also here ya go</a> :)<br>
+							3. "Maybe a message board would be fun" --> <br>
+							"Skip message board, go straight to massively multiplayer online chat room with configurable duck avatars" - Deltron
+					</div>
 				</div>
 			</section>
 
@@ -260,6 +274,37 @@
 				function getValue(title, entries) {
 					return entries.find(entry => entry.gs$cell.row === title.gs$cell.row && entry.gs$cell.col === "2");
 				}
+
+				// ** COUNTDOWN TIMER STUFF **
+				// Set the date we're counting down to
+				var countDownDate = new Date("May 31, 2020 07:30:00").getTime();
+
+				// Update the count down every 1 second
+				var x = setInterval(function() {
+
+				  // Get today's date and time
+				  var now = new Date().getTime();
+
+				  // Find the distance between now and the count down date
+				  var distance = countDownDate - now;
+
+				  // Time calculations for days, hours, minutes and seconds
+				  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				  // Display the result in the element with id="countdown"
+				  document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+				  + minutes + "m " + seconds + "s ";
+
+				  // If the count down is finished, write some text
+				  // if (distance < 0) {
+				  //   clearInterval(x);
+				  //   document.getElementById("countdown").innerHTML = "EXPIRED";
+				  // }
+				}, 1000);
+
 			</script>
 	</body>
 
