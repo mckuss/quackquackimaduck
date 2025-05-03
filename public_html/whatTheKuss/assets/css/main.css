@@ -4257,3 +4257,14 @@
 .stats-list-value {
 	text-align: right;
 }
+
+#video-grid {
+	padding: 4em 2em;
+	background-color: #f9f9f9; /* or whatever fits your theme */
+	text-align: center;
+}
+
+#video-grid .inner {
+	max-width: 1200px;
+	margin: 0 auto;
+}
